@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* execute login. */
+/*Execute sign up. */
 router.get('/', function(req, res, next) {
-  res.render('login', { title: 'Latara Login' });
+  res.render('signup', { title: 'Sign up' });
 });
 
 module.exports = router;
