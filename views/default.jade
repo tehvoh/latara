@@ -4,8 +4,8 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
-    script(type="application/javascript", src="js/minjquery.js")
-    script(type="application/javascript", src="js/bootstrap.js")
+    script(type="application/javascript", src="/js/minjquery.js")
+    script(type="application/javascript", src="/js/bootstrap.js")
   body
     div.navbar.navbar-expand-lg.navbar-light.bg-light
       a.navbar-brand(href="/") Latara
@@ -23,10 +23,17 @@ html
             //-   a.nav-link(href="/") Home 
             //-     span.sr-only
             li.nav-item.active
-              a.nav-link(href="/login") Login 
+              a.nav-link(href="/logout") Sign out 
                 span.sr-only      
             li.nav-item.active
-              a.nav-link(href="/signup") Sign up 
+              a.nav-link(href="/signup") My account 
+                span.sr-only 
+            li.nav-item.active
+              a.nav-link(href="/signup") Library
+                span.sr-only 
+            li.nav-item.active
+              a.nav-link(href="/signup") My account 
                 span.sr-only 
 
     block content
+    script(type="application/javascript", src="/js/site.js")
