@@ -3,7 +3,7 @@ extends default
 block content
   div.container.new-post
     h3 Create New Post
-    form(id="", method="post", action="/posts/new")
+    form(id="", method="POST", action="/posts/new", enctype="multipart/form-data")
       div.file-upload
         label(style="display: block;") Header
         div.form-group.image-upload-wrap
@@ -17,11 +17,11 @@ block content
               button(type="button", class="file-upload-btn"  onclick="$('.file-upload-input').trigger( 'click' )") Change Header image
       div.form-group.clearClass
         label Post Title
-        input.form-control(type="text", name="title" placeholder="Title" required)
+        input.form-control(type="text", name="title",placeholder="Title", required)
       div.form-group
         label Tags
-        input.form-control(type="text", placeholder="Select associated tags")
+        input.form-control(type="text",  name="tags", placeholder="Select associated tags")
       div.form-group
         label Post Content
-        textarea.form-control(name="body", placeholder="Article body" required)
+        textarea.form-control#editor(name="body", placeholder="Article body", required)
       button.btn.btn-success.btn-sm(type="submit") Create Post

@@ -46,6 +46,9 @@ a {
   padding: 20px;
 }
 
+.new-blog, .file-upload-image{
+  max-width: 89% !important;
+}
 
 .file-upload-input {
   position: absolute;

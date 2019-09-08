@@ -1,2 +1,4 @@
 node_modules
- 
+public/post_headers
+public/blog_headers
+config/config.json

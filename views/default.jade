@@ -4,8 +4,10 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+    link(rel='stylesheet', href='/awesome/css/all.min.css')
     script(type="application/javascript", src="/js/minjquery.js")
     script(type="application/javascript", src="/js/bootstrap.js")
+    script(type="application/javascript", src="/assets/ckeditor/ckeditor.js")
   body
     div.navbar.navbar-expand-lg.navbar-light.bg-light
       a.navbar-brand(href="/") Latara
@@ -16,24 +18,35 @@ html
         .collapse.navbar-collapse#navbarSupportedContent
           form.form-inline.my-2.my-lg-0(id="", method="", action="")
             input.form-control.mr-sm-2(type="search", placeholder="Search stories", aria-label="search")
-            button.btn.bt-outline-success.my-2.my-sm-0(type="submit", ) Search    
+            i.fas.fa-search    
+            button.btn.bt-outline-success.my-2.my-sm-0(type="submit", ) Search
             
           ul.navbar-nav.float-sm-right.float-md-right.float-lg-right
             //- li.nav-item.active
             //-   a.nav-link(href="/") Home 
             //-     span.sr-only
+  
             li.nav-item.active
-              a.nav-link(href="/logout") Sign out 
-                span.sr-only      
-            li.nav-item.active
-              a.nav-link(href="/signup") My account 
+              a.nav-link(href="/signup") Create Blog
                 span.sr-only 
+                i.fas.fa-folder-plus
+            li.nav-item.active
+              a.nav-link(href="/posts/new") Write out 
+                span.sr-only
+                i.fas.fa-pen-fancy
             li.nav-item.active
               a.nav-link(href="/signup") Library
                 span.sr-only 
+                i.fas.fa-folder
             li.nav-item.active
               a.nav-link(href="/signup") My account 
                 span.sr-only 
+                i.fas.fa-user-circle
+            li.nav-item.active
+              a.nav-link(href="/logout") Sign out 
+                span.sr-only 
+                i.fas.fa-sign-out-alt   
 
     block content
+    script(type="application/javascript", src="/js/support.js")
     script(type="application/javascript", src="/js/site.js")

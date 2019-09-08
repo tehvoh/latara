@@ -1,0 +1,32 @@
+extends default
+
+block content
+  div.container.new-blog
+    h3 Create My Blog
+    form(id="", method="POST", action="/blog/new", enctype="multipart/form-data")
+      div.form-group
+        label Blog Name
+        input.form-control(type="text", name="identifier",placeholder="Blog name", required)
+          
+      div.file-upload
+        label(style="display: block;") Blog image
+        div.form-group.image-upload-wrap
+            input.file-upload-input(type="file", name="header_image" onchange="readURL(this);" accept="image/*")
+            div.drag-text
+              h5 Drag and drop a file or select add image
+          
+        div.file-upload-content
+            img.file-upload-image(src="#", alt="header image")
+            div.image-title-wrap
+              button(type="button", class="file-upload-btn"  onclick="$('.file-upload-input').trigger( 'click' )") Change Header image
+    
+      div.form-group.clearClass
+        label Categories
+        input.form-control(type="text",  name="categories", placeholder="Select/Create associated categories")
+
+      div.form-group
+        div
+          label Private
+        input(type="checkbox",  name="private", placeholder="Select/Create associated categories")
+          
+      button.btn.btn-success.btn-sm(type="submit") Finish
