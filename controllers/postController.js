@@ -20,7 +20,7 @@ module.exports = {
     });
   },
 
-    showPost(req, res){
+  getPostById(req, res){
       return models.Post
       .findOne({
         where: {id: req.params.id},
@@ -29,13 +29,6 @@ module.exports = {
           required: true,
           attributes: ['username']
         }]
-      })
-      .then((post) => {
-        console.log(post);
-        res.render('viewstory', { title: post.title, body: post.body });
-      })
-      .catch((err) => {
-        console.log(err);
       });
     }
 

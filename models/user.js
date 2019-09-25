@@ -18,6 +18,13 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     // associations can be defined here
     User.hasMany(models.Blog);
+    User.hasMany(models.Post);
+
+    User.belongsToMany(models.Post, {
+      through: models.PostClaps,
+      as: 'claps',
+      foreignKey: 'UserId'
+    });
   };
   return User;
 };

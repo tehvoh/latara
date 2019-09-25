@@ -39,6 +39,21 @@ module.exports = {
       }).catch((error) => res.status(400).send(error));
   },
 
+  getProfile(req, res){
+    return User
+      .findOne({
+        where: {id: req.session.lataraLogin.uuid}
+      })
+      .then((user) => {
+        if(user){
+          res.render('profilemanagement', {user: user});
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
   getByUsername(name) {
     return User
     .findOne({

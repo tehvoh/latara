@@ -78,10 +78,16 @@ router.post('/new', function(req, res){
 
         // This last line responds to the form submission with a list of the parsed data and files.
       //  util.inspect({fields: fields, files: files});
-
+      let name;
+      try{
+        name = fields.identifier.toLowerCase();
+        console.log(name);
+      }catch(err){
+        console.log(err);
+      }
 
         models.Blog.findOne({
-          where:{ identifier:fields.identifier }
+          where:{ normalizedName: name}
         })
         .then((blog) => {
           //Dont recreate blog...redirect back with notification instead
@@ -92,6 +98,7 @@ router.post('/new', function(req, res){
 
           const newBlog = {
             identifier: fields.identifier,
+            normalizedName: name,
             header: headerName
           }
 
@@ -126,7 +133,7 @@ router.post('/new', function(req, res){
             }).catch((err) => {
               throw err
             });
-            return res.redirect('/');
+            return res.redirect('/blog/'+newBlog.identifier);
           })
 
 
@@ -144,6 +151,14 @@ router.post('/new', function(req, res){
 
 });
 
-
+router.get('/:identifier', function(req, res){
+  controllers.blog.getBlog(req.params.identifier).then((blog) => {
+    if(!blog){
+        res.render('notfound', {title: "Blog", message: "Blog not found"})
+    }else{
+        res.render('viewblog', {title: blog.identifier, blog:blog})
+    }
+  })
+})
 
 module.exports = router;

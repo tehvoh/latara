@@ -30,6 +30,16 @@ module.exports = {
         }
       },
 
+      BlogId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        allowNull: true,
+        references: {
+          model: 'Blogs',
+          key: 'id'
+        }
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

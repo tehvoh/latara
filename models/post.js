@@ -25,11 +25,6 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
 
-    Post.hasOne(models.BlogPost, {
-      foreignKey: "PostId",
-      onDelete: 'CASCADE'
-    });
-
     Post.hasMany(models.Postcomment, {
       foreignKey: "PostId",
       onDelete: 'CASCADE'
@@ -45,6 +40,20 @@ module.exports = (sequelize, DataTypes) => {
       as: 'tags',
       foreignKey: 'PostId'
     });
+
+    Post.belongsToMany(models.User, {
+      through: 'PostClaps',
+      as: 'claps',
+      foreignKey: 'PostId'
+    });
+
+    Post.belongsTo(models.Blog, {
+      as: 'blog',
+      foreignKey: 'BlogId',
+      onDelete: 'CASCADE'
+    });
+
+
   };
   return Post;
 };

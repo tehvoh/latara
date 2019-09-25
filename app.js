@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/awesome', express.static('public/fontawesome'))
 
 app.use('/', indexRouter);
-app.use('/login', loginRouter);
+app.use('/login', ifSignedIn, loginRouter);
 app.use('/signup', signupRouter);
 app.use('/posts', checkSignIn, postsRouter);
 app.use('/users',checkSignIn, usersRouter);
@@ -65,6 +65,10 @@ app.get('/discover', function(req, res){
   });
 });
 
+app.get('/profile', checkSignIn, function(req, res){
+  controllers.user.getProfile(req, res);
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -78,6 +82,14 @@ function checkSignIn(req, res, next){
       console.log(req.session.user);
       res.redirect('/login');
       next(err);  //Error, trying to access unauthorized page!
+   }
+}
+
+function ifSignedIn(req, res, next){
+   if(req.session.lataraLogin){
+     res.redirect('/posts');
+   } else {
+      next();  //Error, trying to access unauthorized page!
    }
 }
 // error handler

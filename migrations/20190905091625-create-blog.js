@@ -13,6 +13,11 @@ module.exports = {
         allowNull: false,
         unique: true
       },
+      normalizedName: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
       private: {
         type: Sequelize.BOOLEAN,
         defaultValue: false

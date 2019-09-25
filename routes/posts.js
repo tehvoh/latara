@@ -22,12 +22,18 @@ var formidable = require('formidable'),
 /* GET new post page. */
 router.get('/', function(req, res, next) {
   //console.log(req.session);
+  controllers.post.list().then((posts) => res.render('posts', { title: 'Discover'}))
 
-  res.render('posts', { title: 'New post' });
 });
 /* GET new post page. */
 router.get('/new', function(req, res, next) {
-  res.render('createpost', { title: 'New post' });
+  res.render('createpost', { title: 'New post',  posturl: '/new'  });
+});
+
+/* GET new post page. */
+router.get('/:id/new', function(req, res, next) {
+  req.session.blog = req.params.id;
+  res.render('createpost', { title: 'New post', posturl: '#{:id}/new' });
 });
 
 /* save new post. */
@@ -85,7 +91,7 @@ router.post('/new', function(req, res, next) {
         // This last line responds to the form submission with a list of the parsed data and files.
       //  util.inspect({fields: fields, files: files});
 
-
+      //Check if similar post exists. If none exists create post
         models.Post.findOne({
           where:{ title:fields.title, UserId: req.session.lataraLogin.uuid}
         })
@@ -95,16 +101,19 @@ router.post('/new', function(req, res, next) {
 
           }
 
+          //new post object
           const newPost = {
             title: fields.title,
             body: fields.body,
             header: headerName
           }
 
+          //Create post
           models.Post.create(newPost).then((newPost) => {
             // newPost.addTag({
             //   name: fields.tag
             // })
+            //upon successful post creation, add tags
             models.Tag.findOne({
               where:{name: fields.tags}
             }).then((tag) => {
@@ -121,6 +130,8 @@ router.post('/new', function(req, res, next) {
             }).catch((err) => {
               throw err
             });
+
+            //add user to post
             models.User.findOne({
               where:{id: req.session.lataraLogin.uuid}
             }).then((user) => {
@@ -128,8 +139,23 @@ router.post('/new', function(req, res, next) {
             }).catch((err) => {
               throw err
             });
+
+            //add blog to post if its a blog post
+            if(req.session.blog){
+              models.Blog.findOne({
+                where:{id: req.session.blog}
+              }).then((blog) => {
+                newPost.setBlog(blog)
+              }).catch((err) => {
+                throw err
+              });
+            }
+
+            req.session.blog = null;
+
             return res.redirect('/posts');
           })
+
 
 
 
@@ -148,6 +174,15 @@ router.post('/new', function(req, res, next) {
 
 /* GET new post page. */
 router.get('/:id', function(req, res, next) {
-  controllers.post.showPost(req, res);
+  controllers.post.getPostById(req, res)
+  .then((post) => {
+    if(!post)
+      res.render('notfound', {message: "Ooops! The post you requested could not be found!"});
+    console.log(post);
+    res.render('viewstory', { title: post.title, body: post.body });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 });
 module.exports = router;

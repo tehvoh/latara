@@ -10,7 +10,7 @@ html
     script(type="application/javascript", src="/assets/ckeditor/ckeditor.js")
   body
     div.navbar.navbar-expand-lg.navbar-light.bg-light
-      a.navbar-brand(href="/") Latara
+      a.navbar-brand(href="/discover") #{identifier}
       button.navbar-toggler(type='button' data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent")
         span.navbar-toggler-icon
       .container    
@@ -31,21 +31,21 @@ html
                 span.sr-only 
                 i.fas.fa-folder-plus
             li.nav-item.active
-              a.nav-link(href="/posts/new") Write out 
+              a.nav-link(href="/posts/#{blog.id}/new") Create story 
                 span.sr-only
                 i.fas.fa-pen-fancy
             li.nav-item.active
-              a.nav-link(href="/library") Library
-                span.sr-only 
-                i.fas.fa-folder
-            li.nav-item.active
-              a.nav-link(href="/profile") My account 
+              a.nav-link(href="/blog/manage") Manage 
                 span.sr-only 
                 i.fas.fa-user-circle
             li.nav-item.active
-              a.nav-link(href="/logout") Sign out 
+              a.nav-link(href="/discover") Discover 
                 span.sr-only 
                 i.fas.fa-sign-out-alt   
+            li.nav-item.active
+              a.nav-link(href="/profile") My Account 
+                span.sr-only 
+                i.fas.fa-user-circle
 
     block content
     script(type="application/javascript", src="/js/support.js")

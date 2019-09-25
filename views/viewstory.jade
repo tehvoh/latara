@@ -2,5 +2,13 @@ extends default
 
 block content
   div.container
-    h4.title #{title}
-    div.story #{body}
+    div.header-image
+      h4.title #{title}
+    div.story 
+    div.tags
+    div.comments
+      h5 Responses
+
+    script.
+      var story = document.getElementsByClassName('story');
+      alert(JSON.stringify(#{body}));

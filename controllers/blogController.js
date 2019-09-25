@@ -16,4 +16,11 @@ module.exports = {
     });
 
   },
+
+  getBlog(name){
+    return models.Blog
+    .findOne({
+      where: {normalizedName: name.toLowerCase()}
+    });
+  }
 }

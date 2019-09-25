@@ -7,6 +7,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
+    normalizedName: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false
+    },
+
     private: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
@@ -24,9 +30,8 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
 
-    Blog.hasMany(models.BlogPost, {
-         foreignKey: 'BlogId',
-         onDelete: 'CASCADE'
+    Blog.hasMany(models.Post, {
+      as: 'posts',
     });
 
     Blog.belongsToMany(models.Tag, {
