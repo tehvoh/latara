@@ -1,8 +1,13 @@
 extends default
 
 block content
-  table
-      thead
-          tr Hello
-      tbody
-          tr world
+  div.container
+    div.row
+      each post in posts
+        div.col-sm-4
+          div.card.post-inset(id="#{post.id}" onclick="return showPost(this.id)")
+            img.card-img-top(src="post_headers/#{post.header}", alt="")
+            div.card-body
+              h5.card-text #{post.title}
+  script.
+    function showPost(id){window.location.href = '/posts/'+id;}

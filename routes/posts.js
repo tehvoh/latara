@@ -13,7 +13,16 @@ function insert(query, values){
 
 }
 
-
+function checkSignIn(req, res, next){
+   if(req.session.lataraLogin){
+      next();     //If session exists, proceed to page
+   } else {
+      var err = new Error("Not logged in!");
+      console.log(req.session.user);
+      res.redirect('/login');
+      next(err);  //Error, trying to access unauthorized page!
+   }
+}
 
 //  form processing variables
 var formidable = require('formidable'),
@@ -22,22 +31,23 @@ var formidable = require('formidable'),
 /* GET new post page. */
 router.get('/', function(req, res, next) {
   //console.log(req.session);
-  controllers.post.list().then((posts) => res.render('posts', { title: 'Discover'}))
+  //controllers.post.list(req, res).then((posts) => res.render('posts', { title: 'Discover'}))
+  controllers.post.getfirsttwenty(req, res, 0).then((posts) => res.render('posts', { title: 'Discover', posts: posts}))
 
 });
 /* GET new post page. */
-router.get('/new', function(req, res, next) {
+router.get('/new', checkSignIn, function(req, res, next) {
   res.render('createpost', { title: 'New post',  posturl: '/new'  });
 });
 
 /* GET new post page. */
-router.get('/:id/new', function(req, res, next) {
+router.get('/:id/new', checkSignIn, function(req, res, next) {
   req.session.blog = req.params.id;
   res.render('createpost', { title: 'New post', posturl: '#{:id}/new' });
 });
 
 /* save new post. */
-router.post('/new', function(req, res, next) {
+router.post('/new', checkSignIn, function(req, res, next) {
 
   if (req.url == '/new' && req.method.toLowerCase() == 'post') {
 
@@ -172,14 +182,14 @@ router.post('/new', function(req, res, next) {
 
 });
 
-/* GET new post page. */
+/* View story page. */
 router.get('/:id', function(req, res, next) {
   controllers.post.getPostById(req, res)
   .then((post) => {
     if(!post)
       res.render('notfound', {message: "Ooops! The post you requested could not be found!"});
     console.log(post);
-    res.render('viewstory', { title: post.title, body: post.body });
+    res.render('viewstory', { title: post.title, body: post.body, header: post.header, id: post.id });
   })
   .catch((err) => {
     console.log(err);

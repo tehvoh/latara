@@ -25,28 +25,54 @@ html
             //- li.nav-item.active
             //-   a.nav-link(href="/") Home 
             //-     span.sr-only
-  
-            li.nav-item.active
-              a.nav-link(href="/blog/new") Create Blog
-                span.sr-only 
-                i.fas.fa-folder-plus
-            li.nav-item.active
-              a.nav-link(href="/posts/new") Write out 
-                span.sr-only
-                i.fas.fa-pen-fancy
-            li.nav-item.active
-              a.nav-link(href="/library") Library
-                span.sr-only 
-                i.fas.fa-folder
-            li.nav-item.active
-              a.nav-link(href="/profile") My account 
-                span.sr-only 
-                i.fas.fa-user-circle
-            li.nav-item.active
-              a.nav-link(href="/logout") Sign out 
-                span.sr-only 
-                i.fas.fa-sign-out-alt   
+            -if(_loggedIn){
+            
+              li.nav-item.active
+                a.nav-link(href="/blog/new")
+                  i.fas.fa-folder-plus
+                  span  Create Blog
+              li.nav-item.active
+                a.nav-link(href="/posts/new")
+                  i.fas.fa-pen-fancy
+                  span  Write out 
+                  
+              li.nav-item.active
+                a.nav-link(href="/library")
+                  i.fas.fa-folder
+                  span  Library
+
+              li.nav-item.active
+                a.nav-link(href="/profile")
+                  i.fas.fa-user-circle
+                  span  My account
+              li.nav-item.active
+                a.nav-link(href="/logout") Sign out 
+                  span.sr-only 
+                  i.fas.fa-sign-out-alt            
+            -}else {
+              li.nav-item.active
+                button.btn(type="button", data-target="#loginModal", data-toggle="modal"  ) Sign in
+                  span.sr-only 
+                  i.fas.fa-sign-out-alt    
+            -}
 
     block content
+    div.modal.fade(id="loginModal", role="modal")
+      div.modal-dialog.modal-dialog-centered(role="document")
+        div.modal-content
+          div.modal-header Sign in
+            button(type="button", class="close", data-dismiss="modal", aria-label="Close" )
+              span &times;
+          form(id="", method="post", action="/login")
+            div.modal-body
+              div.form-group
+                label Username or Email
+                input.form-control(type="text", placeholder="Username", name="username")
+              div.form-group
+                label Password
+                input.form-control(type="password", placeholder="Password", name="password")
+            div.modal-footer
+              button.btn.btn-secondary(type="button", data-dismiss="modal", aria-label="Close") Close
+              button.btn.btn-primary(type="submit", ) Log in
     script(type="application/javascript", src="/js/support.js")
     script(type="application/javascript", src="/js/site.js")

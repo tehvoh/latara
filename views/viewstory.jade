@@ -2,13 +2,14 @@ extends default
 
 block content
   div.container
-    div.header-image
+    div.header_title
       h4.title #{title}
-    div.story 
+    div.header_image(style = "background-image: url(/post_headers/#{header})")
+    div.story !{body}
     div.tags
     div.comments
       h5 Responses
 
     script.
       var story = document.getElementsByClassName('story');
-      alert(JSON.stringify(#{body}));
+      alert(#{body});

@@ -44,10 +44,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/awesome', express.static('public/fontawesome'))
 
+app.get('*', function(req, res, next) {
+  // just use boolean for loggedIn
+  res.locals.loggedIn = (req.session) ? true : false;
+  next();
+
+});
 app.use('/', indexRouter);
 app.use('/login', ifSignedIn, loginRouter);
 app.use('/signup', signupRouter);
-app.use('/posts', checkSignIn, postsRouter);
+app.use('/posts', postsRouter);
 app.use('/users',checkSignIn, usersRouter);
 app.use('/blog',checkSignIn, blogsRouter);
 

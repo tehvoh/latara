@@ -107,3 +107,33 @@ a {
   background-color: #1FB264;
   border: 4px dashed #ffffff;
 }
+
+.header_image{
+  min-height: 600px;
+  max-height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/*Post display css*/
+.post-inset{
+  border: none !important;
+}
+
+.post-inset.card-img-top{
+  height: 186px;
+}
+
+.centered{
+  min-height: calc(100% - 3.5rem);
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: auto;
+  margin: auto;
+  pointer-events: none;
+  max-width: 500px;
+}
+
+.main{
+  height: 100vh;
+}
